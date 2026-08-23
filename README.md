@@ -192,12 +192,7 @@ After all tests passed:
 
 ---
 
-## Submission Contents
 
-The final ZIP archive for Week 3 contains:
-
-- `utils.py` – Python module implementing math, string, and parsing utilities.
-- `test_utils.py` – Automated test suite using `unittest`.
 - `README.md` – Documentation explaining:
   - What the module does.
   - What each test
