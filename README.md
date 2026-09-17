@@ -1,198 +1,94 @@
-# Week 3 Task – Automated Tests for Python Applications
+# Writing Automated Tests for Python Applications
 
-Author: Dell  
-Date: 02-08-2026
+A compact, practical Python project that demonstrates how to write and run automated unit tests for utility functions using the standard library.
 
----
+## Value proposition
 
-## Overview
+This repository is a clean reference for:
+- implementing small, reusable Python functions,
+- validating behavior with automated tests, and
+- catching regressions quickly via local test runs and CI.
 
-This Week 3 task implements a small Python module and a suite of automated tests to demonstrate test-driven development (TDD) principles, unit testing, and clear documentation.
+## Features
 
-The project contains:
+- Arithmetic utilities: `add`, `subtract`, `multiply`, `divide`
+- String utilities: `reverse_string`, `count_vowels`
+- Parsing utility: `parse_int_list` for comma-separated integers
+- Error handling coverage (`ValueError`, `TypeError`) in tests
+- CI workflow for automated test execution on push and pull request
 
-- `utils.py` – Python module with reusable utility functions.
-- `test_utils.py` – Automated tests using Python’s built-in `unittest` framework.
-- `README.md` – This documentation, explaining the module, tests, and how to run them.
+## Tech stack
 
-All tests pass successfully, as shown by:
+- [Python 3](https://www.python.org/)
+- [`unittest`](https://docs.python.org/3/library/unittest.html)
+- [GitHub Actions](https://docs.github.com/actions)
 
-```text
-Ran 14 tests in X.XXXs
+## Project structure
 
-OK
+- [`utils.py`](./utils.py) – utility functions under test
+- [`test_utils.py`](./test_utils.py) – unit tests for `utils.py`
+- [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) – CI pipeline
+
+## Prerequisites
+
+- Python 3.9+ (3.10+ recommended)
+- Git (optional, for cloning)
+
+## Installation
+
+```bash
+git clone https://github.com/kumarimanjusrimohantycse2024-art/Writing-Automated-Tests-for-Python-Applications.git
+cd Writing-Automated-Tests-for-Python-Applications
 ```
 
----
+No external dependencies are required.
 
-## Module: `utils.py`
+## Configuration
 
-The `utils.py` module provides three groups of functions:
+No environment variables or secret configuration are needed.
 
-### 1. Math operations
+## Usage examples
 
-- `add(a, b)`  
-  Returns the sum of `a` and `b`.
+Run a few functions directly:
 
-- `subtract(a, b)`  
-  Returns `a - b`.
+```python
+import utils
 
-- `multiply(a, b)`  
-  Returns the product `a * b`.
+print(utils.add(2, 3))                  # 5
+print(utils.reverse_string("hello"))    # "olleh"
+print(utils.parse_int_list("1, 2, 3"))   # [1, 2, 3]
+```
 
-- `divide(a, b)`  
-  Returns `a / b`.  
-  Raises `ValueError` if `b == 0` to prevent division by zero.
+## Testing
 
-These functions are simple but are ideal for demonstrating unit tests with normal cases and error handling.
+Run the test suite:
 
-### 2. String utilities
+```bash
+python -m unittest -v
+```
 
-- `reverse_string(s)`  
-  Returns the reversed version of the string `s`.  
-  Raises `TypeError` if `s` is not a string.
+Expected result: all tests pass.
 
-- `count_vowels(s)`  
-  Counts the number of vowels (`a, e, i, o, u`) in the string `s`, case-insensitive.  
-  Raises `TypeError` if `s` is not a string.
+## Troubleshooting
 
-These functions allow testing normal behavior, edge cases (empty string, no vowels), and type errors.
+- **`ModuleNotFoundError: No module named 'utils'`**
+  - Run tests from the repository root directory.
+- **`python: command not found`**
+  - Use `python3 -m unittest -v` depending on your system.
+- **Unexpected test failure**
+  - Confirm you are using a supported Python version and that local edits are saved.
 
-### 3. Data parsing
+## Contributing
 
-- `parse_int_list(csv_string)`  
-  Parses a comma-separated string of integers into a list of `int`.  
-  Example: `"1,2,3"` → `[1, 2, 3]`  
-  - Ignores extra spaces.
-  - Skips empty entries (`,,`).
-  - Raises `ValueError` if any item is not a valid integer.
-  - Raises `TypeError` if the input is not a string.
+Contributions are welcome.
 
-This function is useful for testing error handling and parsing logic.
+1. Fork the repository
+2. Create a feature branch
+3. Add/update tests for behavior changes
+4. Run `python -m unittest -v`
+5. Open a pull request with a clear summary
 
----
+## License / status
 
-## Test Suite: `test_utils.py`
-
-The tests are written using the `unittest` framework. They cover normal use, edge cases, and error conditions.
-
-### Math function tests
-
-- `test_add_basic`  
-  Checks addition with positive and negative numbers.
-
-- `test_subtract_basic`  
-  Verifies subtraction producing positive and negative results.
-
-- `test_multiply_basic`  
-  Tests multiplication with positive and negative operands.
-
-- `test_divide_basic`  
-  Confirms correct division results, including floating-point values.
-
-- `test_divide_by_zero_raises`  
-  Ensures dividing by zero raises `ValueError`.
-
-These tests ensure the math functions behave correctly and handle invalid operations safely.
-
-### String function tests
-
-- `test_reverse_string_basic`  
-  Tests reversing normal strings and the empty string.
-
-- `test_reverse_string_type_error`  
-  Verifies that passing a non-string (e.g., integer) raises `TypeError`.
-
-- `test_count_vowels_basic`  
-  Checks vowel counting for lowercase and uppercase inputs and for strings with no vowels.
-
-- `test_count_vowels_type_error`  
-  Ensures non-string input raises `TypeError`.
-
-These tests validate both functionality and proper type checking.
-
-### Data parsing tests
-
-- `test_parse_int_list_basic`  
-  Tests parsing a simple comma-separated list like `"1,2,3"`.
-
-- `test_parse_int_list_spaces`  
-  Confirms that spaces around numbers are handled correctly: `" 1 ,  2 ,3 "` → `[1, 2, 3]`.
-
-- `test_parse_int_list_empty_items`  
-  Ensures empty entries (`,,`) are skipped, but valid numbers remain: `"1,,2,,,3"` → `[1, 2, 3]`.
-
-- `test_parse_int_list_invalid_value`  
-  Checks that invalid entries like `"two"` cause `ValueError`.
-
-- `test_parse_int_list_type_error`  
-  Ensures a non-string input (e.g., integer) raises `TypeError`.
-
-These tests confirm that parsing works as expected and that errors are raised for invalid inputs.
-
----
-
-## Development and Testing Methodology
-
-### Approach
-
-For this task, I used a **test-after development** style:
-
-1. Implemented the core functions in `utils.py`.
-2. Designed tests in `test_utils.py` to cover:
-   - Normal and typical scenarios.
-   - Edge cases (empty strings, extra commas, spaces).
-   - Error conditions (invalid types, invalid values, division by zero).
-3. Ran the tests using `python test_utils.py`.
-4. Fixed any failing tests by correcting logic or adding error handling.
-5. Refactored the code slightly for clarity and maintainability while ensuring all tests still passed.
-
-This process demonstrates TDD principles: letting tests define the expected behavior and using them to confirm that changes do not break existing functionality.
-
----
-
-## How to Run the Tests
-
-1. Ensure Python 3 is installed (e.g., Python 3.13).
-2. Open a terminal in the `week3_tests` folder (where `utils.py` and `test_utils.py` are located).
-3. Run:
-
-   ```bash
-   python test_utils.py
-   ```
-
-4. You should see output similar to:
-
-   ```text
-   ..............
-   ----------------------------------------------------------------------
-   Ran 14 tests in 0.00Xs
-
-   OK
-   ```
-
-This indicates that all 14 tests passed successfully.
-
----
-
-## Refactoring and Maintainability
-
-After all tests passed:
-
-- The code in `utils.py` was checked for:
-  - Clear function names.
-  - Useful docstrings.
-  - Consistent error handling (`ValueError`, `TypeError`).
-- No further refactoring was needed because the code is already small and readable.
-- The tests in `test_utils.py` are organized into classes:
-  - `TestMathFunctions`
-  - `TestStringFunctions`
-  - `TestParseIntList`
-  This structure makes it easy to add more tests in the future.
-
----
-
-
-- `README.md` – Documentation explaining:
-  - What the module does.
-  - What each test
+- **License:** No license file is currently present in this repository.
+- **Project status:** Active educational/demo project.
